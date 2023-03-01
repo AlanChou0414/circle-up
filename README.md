@@ -2,7 +2,9 @@
 
 ### :camera: Screenshots
 
-<img src="https://user-images.githubusercontent.com/99056343/217697265-78373f15-afa1-44b7-9aa5-d7162797bda3.gif" align='center' width='400px' height='400px' class='img-border'>
+
+<img src="https://user-images.githubusercontent.com/99056343/222062423-15b561a7-056c-4540-8cf9-adeb4fe7b562.gif">
+
 
 ## :star2: About the Project
 
