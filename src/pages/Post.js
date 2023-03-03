@@ -78,8 +78,8 @@ const Post = () => {
 
   //handle comment submit
   const handleCommentSubmit = () => {
-    const user = firebase.auth().currentUser?.uid
-    if (!user) {
+    const user = firebase.auth().currentUser
+    if (!user?.uid) {
       setIsAlertOpen(!isAlertOpen)
       setTimeout(() => {
         navigate('/signin')
@@ -87,7 +87,7 @@ const Post = () => {
       }, 1500)
       return
     }
-    if (!user.photoURL || !user.displayName) {
+    if (!user?.photoURL || !user?.displayName) {
       setIsAlertOpen(!isAlertOpen)
       setTimeout(() => {
         navigate('/user/settings')
@@ -95,6 +95,7 @@ const Post = () => {
       }, 1500);
       return
     }
+    
     if (!commentContent) {
       setErrorMessage('請輸入留言內容！')
       return
