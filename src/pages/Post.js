@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import {
   Grid,
@@ -16,8 +16,11 @@ import firebase from '../utils/firebase'
 import 'firebase/compat/storage'
 import 'firebase/compat/auth'
 
-const Post = ({ user }) => {
+import { Context } from 'components/Context'
+
+const Post = () => {
   //get https:// ... /postId?
+  const { user } = useContext(Context)
   const { postId } = useParams()
   const navigate = useNavigate()
   const [post, setPost] = useState(null)
@@ -26,6 +29,8 @@ const Post = ({ user }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+
+  console.log(user)
 
   //get firebase storage 'posts'
   useEffect(() => {
@@ -82,6 +87,14 @@ const Post = ({ user }) => {
       }, 1500)
       return
     }
+    if (!user.photoURL || !user.displayName) {
+      setIsAlertOpen(!isAlertOpen)
+      setTimeout(() => {
+        navigate('/user/settings')
+        setIsAlertOpen(false)
+      }, 1500);
+      return
+    }
     if (!commentContent) {
       setErrorMessage('請輸入留言內容！')
       return
@@ -113,23 +126,22 @@ const Post = ({ user }) => {
   }
 
   //handle scroll
-  const handleWindowScroll = () => {
+  const handleBackPage = () => {
     navigate(-1)
-    // window.scrollTo(0, localStorage.getItem('userScroll'))
   }
 
   return (
     <Grid.Column width={10} textAlign='left'>
       <Modal size='mini' open={isAlertOpen} centered={false}>
         <Modal.Header>訊息</Modal.Header>
-        <Modal.Content>請先登入帳號！</Modal.Content>
+        <Modal.Content>請先設定會員資料</Modal.Content>
       </Modal>
       {
         post &&
         <>
-          <Button onClick={handleWindowScroll} floated='right'>返回</Button>
+          <Button onClick={handleBackPage} floated='right'>返回</Button>
           {
-            user?.photoURL
+            post.author?.photoURL
               ? <Image src={post.author?.photoURL} avatar wrapped />
               : <Icon name='user circle' size='big' />
           }

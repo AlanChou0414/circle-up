@@ -6,7 +6,7 @@ import 'firebase/compat/storage'
 
 import Post from '../components/Post'
 
-const UserPosts = ({ user }) => {
+const UserPosts = () => {
   const [posts, setPosts] = useState()
 
   //get user post

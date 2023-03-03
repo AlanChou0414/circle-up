@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useLocation } from 'react-router'
 import { Grid, Item } from 'semantic-ui-react'
 import firebase from '../utils/firebase'
@@ -10,7 +10,10 @@ import Post from '../components/Post'
 //library
 import { Waypoint } from 'react-waypoint'
 
-const Posts = ({ user }) => {
+import { Context } from 'components/Context'
+
+const Posts = () => {
+  const { user } = useContext(Context)
   const [posts, setPosts] = useState()
   const location = useLocation()
   const { search } = location
@@ -64,18 +67,6 @@ const Posts = ({ user }) => {
           console.log(error)
         })
   }, [currentTopic])
-
-  //handle window scroll
-  // useEffect(() => {
-  //   window.scrollTo(0,localStorage.getItem('userScroll'))
-  //   const handleScroll = () => {
-  //     localStorage.setItem('userScroll', window.scrollY)
-  //   }
-  //   window.addEventListener('scroll', handleScroll)
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll)
-  //   }
-  // }, [])
 
   return (
     <>

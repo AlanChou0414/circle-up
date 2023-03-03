@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { useNavigate } from 'react-router'
 import {
   Button,
@@ -12,7 +12,10 @@ import {
 import firebase from '../../utils/firebase'
 import 'firebase/compat/auth'
 
-export const UserName = ({ user }) => {
+import { Context } from "components/Context"
+
+export const UserName = () => {
+  const { user } = useContext(Context)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [displayName, setDisplayName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -89,7 +92,8 @@ export const UserName = ({ user }) => {
   )
 }
 
-export const UserPhoto = ({ user }) => {
+export const UserPhoto = () => {
+  const { user } = useContext(Context)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [file, setFile] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -183,7 +187,8 @@ export const UserPhoto = ({ user }) => {
   )
 }
 
-export const UserPassword = ({ user }) => {
+export const UserPassword = () => {
+  const { user } = useContext(Context)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [password, setPassword] = useState({})

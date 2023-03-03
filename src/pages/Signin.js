@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Menu, Form, Container, Message, Modal, Header, Button } from 'semantic-ui-react'
 import { useNavigate } from 'react-router'
 import 'firebase/compat/auth'
 import firebase from '../utils/firebase'
 
-const Signin = ({ user }) => {
+import { Context } from 'components/Context'
+
+const Signin = () => {
+  const { user } = useContext(Context)
   const navigate = useNavigate()
   const [activeItem, setActiveItem] = useState('register')
   const [inputData, setInputData] = useState({})

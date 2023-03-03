@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Container, Dropdown, Form, Header, Image, Input, TextArea, Modal } from 'semantic-ui-react'
 import firebase from '../utils/firebase'
@@ -6,7 +6,10 @@ import 'firebase/compat/firestore'
 import 'firebase/compat/auth'
 import 'firebase/compat/storage'
 
-const NewPost = ({ user }) => {
+import { Context } from 'components/Context'
+
+const NewPost = () => {
+  const { user } = useContext(Context)
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [inputData, setInputData] = useState({})

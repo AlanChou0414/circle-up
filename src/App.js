@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import firebase from 'utils/firebase'
 import 'firebase/compat/auth'
 
 //pages
@@ -15,29 +14,35 @@ import NotFind from 'pages/NotFind'
 import ScrollToTop from 'components/ScrollToTop'
 import Home from 'pages/Home'
 
-const App = () => {
-  const [user, setUser] = useState(null)
+//context & custom hook
+import { Context } from 'components/Context'
+import useAuth from 'hooks/useAuth'
 
-  //listen user is login?
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(currentUser => {
-      setUser(currentUser)
-    })
-  }, [])
+//protect router
+import ProtectRouter from 'utils/ProtectRouter'
+
+const App = () => {
+  const { user, setUser } = useAuth()
 
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path='/' element={<Layout user={user} />}>
-          <Route index element={<Home />} />
-          <Route path='/posts/*' element={<PostNavigate user={user} />} end />
-          <Route path='/user/*' element={<UserNavigate user={user} />} end />
-          <Route path='/new-post' element={<NewPost user={user} />} />
-          <Route path='/signin' element={<Signin user={user} />} />
-          <Route path='*' element={<NotFind />} />
-        </Route>
-      </Routes>
+      <Context.Provider value={{ user, setUser }} >
+        <ScrollToTop />
+        <Routes>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path='/posts/*' element={<PostNavigate />} end />
+            <Route path='/user/*' element={<UserNavigate />} end />
+            <Route path='/new-post' element={
+              <ProtectRouter>
+                <NewPost />
+              </ProtectRouter>
+            } />
+            <Route path='/signin' element={<Signin />} />
+            <Route path='*' element={<NotFind />} />
+          </Route>
+        </Routes>
+      </Context.Provider>
     </BrowserRouter>
   )
 }

@@ -3,10 +3,11 @@ import Header from './Header'
 import { Outlet } from 'react-router'
 import { Container } from 'semantic-ui-react'
 
-const Layout = ({ user }) => {
+const Layout = () => {
+
   return (
     <>
-      <Header user={user} />
+      <Header/>
       <Container style={{ marginTop: 100 }}>
         <Outlet />
       </Container>

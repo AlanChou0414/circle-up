@@ -6,7 +6,10 @@ import Post from 'pages/Post'
 import Posts from 'pages/Posts'
 import Topics from 'components/Topics'
 
-const PostNavigate = ({ user }) => {
+//protect router
+import ProtectRouter from 'utils/ProtectRouter'
+
+const PostNavigate = () => {
   return (
     <Container>
       <Grid textAlign='center'>
@@ -15,8 +18,12 @@ const PostNavigate = ({ user }) => {
             <Topics />
           </Grid.Column>
           <Routes>
-            <Route path='*' element={<Posts user={user} />} exact />
-            <Route path=':postId' element={<Post user={user} />} exact />
+            <Route path='*' element={<Posts />} exact />
+            <Route path=':postId' element={
+              <ProtectRouter>
+                <Post />
+              </ProtectRouter>
+            } exact />
           </Routes>
         </Grid.Row>
       </Grid>

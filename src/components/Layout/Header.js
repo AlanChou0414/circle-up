@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { Container, Menu, Search, Modal } from 'semantic-ui-react'
+import React, { useState, useContext } from 'react'
+import { Container, Menu, Modal, Icon } from 'semantic-ui-react'
 import { Link, useNavigate } from 'react-router-dom'
 import firebase from '../../utils/firebase'
 import 'firebase/compat/auth'
 
-const Header = ({ user }) => {
+import { Context } from 'components/Context'
+
+const Header = () => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const { user } = useContext(Context)
 
   const navigate = useNavigate()
 
@@ -45,13 +48,14 @@ const Header = ({ user }) => {
           <Modal.Header>訊息</Modal.Header>
           <Modal.Content>{errorMessage}</Modal.Content>
         </Modal>
-        <Menu.Item as={Link} to='/posts' style={{ fontSize: 20 }}>
+        <Menu.Item as={Link} to='/' style={{ fontSize: 20 }}>
+          <Icon name='home' />
           Circle Up
         </Menu.Item>
-        {/* <Menu.Item >
-          <Search size='mini' />
-        </Menu.Item> */}
         <Menu.Menu position='right'>
+          <Menu.Item as={Link} to='/posts'>
+            留言板
+          </Menu.Item>
           {
             user
               ?

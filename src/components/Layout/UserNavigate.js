@@ -6,11 +6,11 @@ import UserMenu from 'components/UserMenu'
 import UserPosts from 'pages/UserPosts'
 import UserCollections from 'pages/UserCollections'
 import UserSettings from 'pages/UserSettings'
+import ProtectRouter from 'utils/ProtectRouter'
 
-const UserNavigate = ({ user }) => {
+const UserNavigate = () => {
   return (
-    user
-      ?
+    <ProtectRouter>
       <Container>
         <Grid textAlign='center'>
           <Grid.Row>
@@ -19,15 +19,15 @@ const UserNavigate = ({ user }) => {
             </Grid.Column>
             <Grid.Column width={10}>
               <Routes>
-                <Route path='/collections' element={<UserCollections user={user} />} exact />
-                <Route path='/posts' element={<UserPosts user={user} />} exact />
-                <Route path='/settings' element={<UserSettings user={user} />} exact />
+                <Route path='/collections' element={<UserCollections />} exact />
+                <Route path='/posts' element={<UserPosts />} exact />
+                <Route path='/settings' element={<UserSettings />} exact />
               </Routes>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </Container >
-      : window.location = '/signin'
+    </ProtectRouter>
   )
 }
 
